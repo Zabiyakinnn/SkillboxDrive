@@ -16,30 +16,31 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 final class AuthViewController: UIViewController {
     
-    private lazy var scheme = "myFile"
+//    private lazy var scheme = "https://oauth.yandex.ru/verification_code"
+    private let clientID = "d4464c6a218b417ea7bcba2985a2e669"
     
     weak var delegate: AuthViewControllerDelegate?
-    
     private let webView = WKWebView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(webView)
+        setupeConstraint()
+        
+        guard let request = request else { return }
+        webView.load(request) 
+        webView.navigationDelegate = self
+
+    }
     
     private var request: URLRequest? {
         guard var components = URLComponents(string: "https://oauth.yandex.ru/authorize") else { return nil }
         components.queryItems = [
             URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "client_id", value: "d4464c6a218b417ea7bcba2985a2e669")
+            URLQueryItem(name: "client_id", value: "\(clientID)")
         ]
         guard let url = components.url else { return nil }
         return URLRequest(url: url)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Info"
-        view.addSubview(webView)
-        setupeConstraint()
-        webView.navigationDelegate = self
-        guard let request = request else { return }
-        webView.load(request) 
     }
     
 }
@@ -53,26 +54,22 @@ extension AuthViewController {
     }
 }
 
+//MARK: - WKNavigationDelegate
 extension AuthViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url,
-           url.scheme == scheme {
+        if let url = navigationAction.request.url {
             let targetString = url.absoluteString.replacingOccurrences(of: "#", with: "?")
             guard let components = URLComponents(string: targetString) else { return }
+            let getToken = components.queryItems?.first(where: {$0.name == "access_token"})?.value
             
-            let token = components.queryItems?.first(where: { $0.name == "access_token"})?.value
-            
-            if let token =  token {
-                delegate?.handleTokenChanged(token: token)
+            if let getToken = getToken {
+                UserDefaults.standard.set(getToken, forKey: UserDefaultsKey.saveToken)
+                print("Token: - \(getToken)")
             }
-            
-            dismiss(animated: true, completion: nil)
-            decisionHandler(.cancel)
-        } else {
-            decisionHandler(.allow)
         }
+        decisionHandler(.allow)
     }
+    
 }
-

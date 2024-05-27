@@ -11,7 +11,7 @@ class InfoViewController: UIViewController {
     
     static var current: InfoViewController?
     private var isFirst = false
-    private var token = ""
+//    private var token = ""
     
     private lazy var scrollView: UIScrollView = {
        let scrollView = UIScrollView()
@@ -61,7 +61,6 @@ class InfoViewController: UIViewController {
         
         slides = createSlides()
         setupSlidesScrollView(slides: slides)
-    
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,7 +133,7 @@ class InfoViewController: UIViewController {
 //        }
     }
     func openAuthViewController() {
-        guard !token.isEmpty else {
+        guard !Keys.token.isEmpty else {
             let authVC = AuthViewController()
             authVC.delegate = self
             present(authVC, animated: true, completion: nil)
@@ -186,8 +185,8 @@ extension InfoViewController {
 
 extension InfoViewController: AuthViewControllerDelegate {
     func handleTokenChanged(token: String) {
-        self.token = token
-        print("token:- \(token)")
+        Keys.token = token
+        print("token:- \(Keys.token)")
         openAuthViewController()
     }
 }

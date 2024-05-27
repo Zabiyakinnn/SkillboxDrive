@@ -13,7 +13,7 @@ class StartViewModel {
         return UIImage(named: "logo")
     }
     
-    func enterButtonTapped(navigationController: UINavigationController, networkManager: NetworkManagerAuthProtocol) {
+    func enterButtonTapped(navigationController: UINavigationController) {
         let infoVC = InfoViewController()
         navigationController.pushViewController(infoVC, animated: true)
     }

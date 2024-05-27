@@ -18,6 +18,8 @@
 		C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD582BF6440300E31686 /* OnboardingView.swift */; };
 		C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD5B2BF65D6C00E31686 /* Constants.swift */; };
 		C27EDD5F2BF65E3400E31686 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD5E2BF65E3400E31686 /* AuthViewController.swift */; };
+		C292359A2C02003500559A9D /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29235992C02003500559A9D /* UserDefaultsKey.swift */; };
+		C292359D2C04D2AD00559A9D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C292359C2C04D2AD00559A9D /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		C27EDD582BF6440300E31686 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C27EDD5B2BF65D6C00E31686 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C27EDD5E2BF65E3400E31686 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		C29235992C02003500559A9D /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
+		C292359C2C04D2AD00559A9D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D29F610381913CD97F9965BA /* Pods-Skillbox Disk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.release.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.release.xcconfig"; sourceTree = "<group>"; };
 		F4EB68FF02128F6645726A5C /* Pods-Skillbox Disk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +92,7 @@
 		C27EDD392BF6254200E31686 /* Skillbox Disk */ = {
 			isa = PBXGroup;
 			children = (
+				C292359B2C04D29600559A9D /* TabBarViewController */,
 				C27EDD5D2BF65E2000E31686 /* Auth */,
 				C27EDD5A2BF65D5D00E31686 /* Common */,
 				C27EDD4E2BF62B6600E31686 /* StartViewController */,
@@ -131,8 +136,17 @@
 			isa = PBXGroup;
 			children = (
 				C27EDD5E2BF65E3400E31686 /* AuthViewController.swift */,
+				C29235992C02003500559A9D /* UserDefaultsKey.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		C292359B2C04D29600559A9D /* TabBarViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C292359C2C04D2AD00559A9D /* TabBarViewController.swift */,
+			);
+			path = TabBarViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +271,8 @@
 				C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */,
 				C27EDD532BF62F1A00E31686 /* InfoViewController.swift in Sources */,
 				C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */,
+				C292359D2C04D2AD00559A9D /* TabBarViewController.swift in Sources */,
+				C292359A2C02003500559A9D /* UserDefaultsKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
