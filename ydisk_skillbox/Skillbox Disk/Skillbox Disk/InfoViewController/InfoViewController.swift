@@ -11,7 +11,6 @@ class InfoViewController: UIViewController {
     
     static var current: InfoViewController?
     private var isFirst = false
-//    private var token = ""
     
     private lazy var scrollView: UIScrollView = {
        let scrollView = UIScrollView()
@@ -49,7 +48,6 @@ class InfoViewController: UIViewController {
         setupView()
         setupeConstraint()
         setDelegate()
-        
     }
     
     private func setupView() {
@@ -124,31 +122,27 @@ class InfoViewController: UIViewController {
     
     @objc func nextButton() {
         openAuthViewController()
-//        isFirst = true
-//        guard !token.isEmpty else {
-//            let authVC = AuthViewController()
-//            authVC.delegate = self
-//            present(authVC, animated: true)
-//            return
-//        }
     }
+    
     func openAuthViewController() {
-        guard !Keys.token.isEmpty else {
+        guard let token = UserDefaults.standard.string(forKey: UserDefaultsKey.saveToken) else {
+            print("Tокен не найден. Открытие AuthViewController.")
             let authVC = AuthViewController()
             authVC.delegate = self
             present(authVC, animated: true, completion: nil)
             return
         }
-        
+        print("Tокен найден: \(token). Открытие TabBarViewController.")
+        let tabBarVC = TabBarViewController()
+        tabBarVC.modalPresentationStyle = .fullScreen
+        present(tabBarVC, animated: true, completion: nil)
+
     }
-    
 }
 
 //MARK: - UIScrollViewDelegate
 
-
 extension InfoViewController: UIScrollViewDelegate {
-     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
         pageControl.currentPage = Int(pageIndex)
@@ -158,7 +152,6 @@ extension InfoViewController: UIScrollViewDelegate {
 //MARK: - Set Constraint
 
 extension InfoViewController {
-    
     private func setupeConstraint() {
         scrollView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -174,7 +167,7 @@ extension InfoViewController {
         }
         buttonNext.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(720)
+            make.top.equalTo(680)
             make.width.equalTo(320)
             make.height.equalTo(50)
         }
@@ -185,8 +178,11 @@ extension InfoViewController {
 
 extension InfoViewController: AuthViewControllerDelegate {
     func handleTokenChanged(token: String) {
-        Keys.token = token
-        print("token:- \(Keys.token)")
-        openAuthViewController()
+        print("Получен токен: \(token)")
+        DispatchQueue.main.async {
+            let tabBarVC = TabBarViewController()
+            tabBarVC.modalPresentationStyle = .fullScreen
+            self.present(tabBarVC, animated: true, completion: nil)
+        }
     }
 }

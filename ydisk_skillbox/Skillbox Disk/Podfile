@@ -8,5 +8,7 @@ target 'Skillbox Disk' do
   # Pods for Skillbox Disk
   pod 'SnapKit', '~> 5.0.0'
   pod 'KeychainSwift', '~> 20.0'
+  pod 'SDWebImage', '~> 5.0'
+  pod 'Charts'
 
 end

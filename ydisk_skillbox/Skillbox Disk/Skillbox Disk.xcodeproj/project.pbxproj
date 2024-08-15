@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		BDCFB094120E257C7F29D128 /* Pods_Skillbox_Disk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C86B96461A68950E0984686 /* Pods_Skillbox_Disk.framework */; };
+		C21BCEE12C64A560006B8647 /* UnknownFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEE02C64A560006B8647 /* UnknownFileViewController.swift */; };
+		C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEE52C64E943006B8647 /* CoreData.xcdatamodeld */; };
+		C21BCEEC2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEEA2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift */; };
+		C21BCEEE2C65FA92006B8647 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */; };
+		C22DFCE02C09E4910047EC40 /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */; };
+		C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22DFCE12C09F5DF0047EC40 /* ItemList.swift */; };
+		C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */; };
+		C260436C2C11DBB300920752 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260436B2C11DBB300920752 /* ProfileViewController.swift */; };
+		C260436F2C1C5C0F00920752 /* OpenFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260436E2C1C5C0F00920752 /* OpenFilesViewController.swift */; };
+		C268B07E2C0B348E00717125 /* FilesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268B07D2C0B348E00717125 /* FilesCell.swift */; };
 		C27EDD3B2BF6254200E31686 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3A2BF6254200E31686 /* AppDelegate.swift */; };
 		C27EDD3D2BF6254200E31686 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3C2BF6254200E31686 /* SceneDelegate.swift */; };
 		C27EDD3F2BF6254200E31686 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3E2BF6254200E31686 /* StartViewController.swift */; };
@@ -18,12 +28,32 @@
 		C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD582BF6440300E31686 /* OnboardingView.swift */; };
 		C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD5B2BF65D6C00E31686 /* Constants.swift */; };
 		C27EDD5F2BF65E3400E31686 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD5E2BF65E3400E31686 /* AuthViewController.swift */; };
+		C289782D2C1081C00070E178 /* LastUploadedFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C289782C2C1081C00070E178 /* LastUploadedFilesViewController.swift */; };
+		C28978312C1088A10070E178 /* UploadedFilesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28978302C1088A10070E178 /* UploadedFilesCell.swift */; };
 		C292359A2C02003500559A9D /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29235992C02003500559A9D /* UserDefaultsKey.swift */; };
 		C292359D2C04D2AD00559A9D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C292359C2C04D2AD00559A9D /* TabBarViewController.swift */; };
+		C29D5E182C37DC55007B6855 /* PublishedFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */; };
+		C29DC2532C46579D0072B135 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DC2522C46579D0072B135 /* PDFViewController.swift */; };
+		C29DF4D12C4AAC6700AE5248 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D02C4AAC6700AE5248 /* NetworkService.swift */; };
+		C29DF4D42C4BB14400AE5248 /* RenameFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */; };
+		C29DF4D92C52501E00AE5248 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */; };
+		C29DF4DB2C526D5B00AE5248 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */; };
+		C2C205612C412D5900CA146E /* NoFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C205602C412D5900CA146E /* NoFilesViewController.swift */; };
+		C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6C86B96461A68950E0984686 /* Pods_Skillbox_Disk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Skillbox_Disk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C21BCEE02C64A560006B8647 /* UnknownFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownFileViewController.swift; sourceTree = "<group>"; };
+		C21BCEE62C64E943006B8647 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		C21BCEEA2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelDisk+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
+		C22DFCE12C09F5DF0047EC40 /* ItemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemList.swift; sourceTree = "<group>"; };
+		C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedFileViewController.swift; sourceTree = "<group>"; };
+		C260436B2C11DBB300920752 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C260436E2C1C5C0F00920752 /* OpenFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFilesViewController.swift; sourceTree = "<group>"; };
+		C268B07D2C0B348E00717125 /* FilesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCell.swift; sourceTree = "<group>"; };
 		C27EDD372BF6254200E31686 /* Skillbox Disk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Skillbox Disk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27EDD3A2BF6254200E31686 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C27EDD3C2BF6254200E31686 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,8 +66,18 @@
 		C27EDD582BF6440300E31686 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C27EDD5B2BF65D6C00E31686 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C27EDD5E2BF65E3400E31686 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		C289782C2C1081C00070E178 /* LastUploadedFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastUploadedFilesViewController.swift; sourceTree = "<group>"; };
+		C28978302C1088A10070E178 /* UploadedFilesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedFilesCell.swift; sourceTree = "<group>"; };
 		C29235992C02003500559A9D /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		C292359C2C04D2AD00559A9D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedFileCell.swift; sourceTree = "<group>"; };
+		C29DC2522C46579D0072B135 /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		C29DF4D02C4AAC6700AE5248 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameFileViewController.swift; sourceTree = "<group>"; };
+		C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		C2C205602C412D5900CA146E /* NoFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilesViewController.swift; sourceTree = "<group>"; };
+		C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
 		D29F610381913CD97F9965BA /* Pods-Skillbox Disk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.release.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.release.xcconfig"; sourceTree = "<group>"; };
 		F4EB68FF02128F6645726A5C /* Pods-Skillbox Disk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,9 +111,57 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C21BCEE82C65F4F0006B8647 /* ModelsCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				C21BCEEA2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift */,
+				C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */,
+			);
+			path = ModelsCoreData;
+			sourceTree = "<group>";
+		};
+		C22DFCDE2C09E4630047EC40 /* FilesController */ = {
+			isa = PBXGroup;
+			children = (
+				C260436D2C1C5BF900920752 /* OpenFile */,
+				C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */,
+				C268B07D2C0B348E00717125 /* FilesCell.swift */,
+			);
+			path = FilesController;
+			sourceTree = "<group>";
+		};
+		C2447CA22C2EB8F8008FA90D /* PublishedFileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */,
+				C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */,
+			);
+			path = PublishedFileViewController;
+			sourceTree = "<group>";
+		};
+		C260436A2C11DB9700920752 /* ProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C2447CA22C2EB8F8008FA90D /* PublishedFileViewController */,
+				C260436B2C11DBB300920752 /* ProfileViewController.swift */,
+			);
+			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		C260436D2C1C5BF900920752 /* OpenFile */ = {
+			isa = PBXGroup;
+			children = (
+				C2C205602C412D5900CA146E /* NoFilesViewController.swift */,
+				C260436E2C1C5C0F00920752 /* OpenFilesViewController.swift */,
+				C21BCEE02C64A560006B8647 /* UnknownFileViewController.swift */,
+			);
+			path = OpenFile;
+			sourceTree = "<group>";
+		};
 		C27EDD2E2BF6254200E31686 = {
 			isa = PBXGroup;
 			children = (
+				C21BCEE52C64E943006B8647 /* CoreData.xcdatamodeld */,
 				C27EDD392BF6254200E31686 /* Skillbox Disk */,
 				C27EDD382BF6254200E31686 /* Products */,
 				382A79091A3E55714E5E0BE6 /* Pods */,
@@ -92,6 +180,15 @@
 		C27EDD392BF6254200E31686 /* Skillbox Disk */ = {
 			isa = PBXGroup;
 			children = (
+				C21BCEE82C65F4F0006B8647 /* ModelsCoreData */,
+				C29DF4D72C4FB33100AE5248 /* ImageViewController */,
+				C29DF4D22C4BB12800AE5248 /* RenameFileController */,
+				C29DF4CF2C4AAC5100AE5248 /* NetworkManager */,
+				C2C5A4492C49048D005CDF52 /* WKWebViewController */,
+				C29DC2512C46578A0072B135 /* PDFViewController */,
+				C260436A2C11DB9700920752 /* ProfileViewController */,
+				C289782B2C1081A00070E178 /* UploadedFilesController */,
+				C22DFCDE2C09E4630047EC40 /* FilesController */,
 				C292359B2C04D29600559A9D /* TabBarViewController */,
 				C27EDD5D2BF65E2000E31686 /* Auth */,
 				C27EDD5A2BF65D5D00E31686 /* Common */,
@@ -141,12 +238,63 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		C289782B2C1081A00070E178 /* UploadedFilesController */ = {
+			isa = PBXGroup;
+			children = (
+				C289782C2C1081C00070E178 /* LastUploadedFilesViewController.swift */,
+				C28978302C1088A10070E178 /* UploadedFilesCell.swift */,
+			);
+			path = UploadedFilesController;
+			sourceTree = "<group>";
+		};
 		C292359B2C04D29600559A9D /* TabBarViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C292359C2C04D2AD00559A9D /* TabBarViewController.swift */,
 			);
 			path = TabBarViewController;
+			sourceTree = "<group>";
+		};
+		C29DC2512C46578A0072B135 /* PDFViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C29DC2522C46579D0072B135 /* PDFViewController.swift */,
+			);
+			path = PDFViewController;
+			sourceTree = "<group>";
+		};
+		C29DF4CF2C4AAC5100AE5248 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				C29DF4D02C4AAC6700AE5248 /* NetworkService.swift */,
+				C22DFCE12C09F5DF0047EC40 /* ItemList.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		C29DF4D22C4BB12800AE5248 /* RenameFileController */ = {
+			isa = PBXGroup;
+			children = (
+				C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */,
+			);
+			path = RenameFileController;
+			sourceTree = "<group>";
+		};
+		C29DF4D72C4FB33100AE5248 /* ImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */,
+				C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */,
+			);
+			path = ImageViewController;
+			sourceTree = "<group>";
+		};
+		C2C5A4492C49048D005CDF52 /* WKWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */,
+			);
+			path = WKWebViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,16 +411,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29DF4D42C4BB14400AE5248 /* RenameFileViewController.swift in Sources */,
 				C27EDD552BF63D4300E31686 /* StartViewModel.swift in Sources */,
+				C21BCEEC2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift in Sources */,
+				C260436F2C1C5C0F00920752 /* OpenFilesViewController.swift in Sources */,
 				C27EDD3F2BF6254200E31686 /* StartViewController.swift in Sources */,
+				C29DF4DB2C526D5B00AE5248 /* ImageViewController.swift in Sources */,
+				C2C205612C412D5900CA146E /* NoFilesViewController.swift in Sources */,
+				C21BCEE12C64A560006B8647 /* UnknownFileViewController.swift in Sources */,
+				C28978312C1088A10070E178 /* UploadedFilesCell.swift in Sources */,
+				C29DC2532C46579D0072B135 /* PDFViewController.swift in Sources */,
 				C27EDD3B2BF6254200E31686 /* AppDelegate.swift in Sources */,
 				C27EDD3D2BF6254200E31686 /* SceneDelegate.swift in Sources */,
+				C29D5E182C37DC55007B6855 /* PublishedFileCell.swift in Sources */,
 				C27EDD5F2BF65E3400E31686 /* AuthViewController.swift in Sources */,
+				C29DF4D92C52501E00AE5248 /* ImageViewModel.swift in Sources */,
+				C260436C2C11DBB300920752 /* ProfileViewController.swift in Sources */,
+				C268B07E2C0B348E00717125 /* FilesCell.swift in Sources */,
 				C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */,
+				C21BCEEE2C65FA92006B8647 /* CoreDataManager.swift in Sources */,
 				C27EDD532BF62F1A00E31686 /* InfoViewController.swift in Sources */,
+				C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */,
+				C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */,
+				C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */,
 				C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */,
+				C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */,
+				C289782D2C1081C00070E178 /* LastUploadedFilesViewController.swift in Sources */,
+				C29DF4D12C4AAC6700AE5248 /* NetworkService.swift in Sources */,
 				C292359D2C04D2AD00559A9D /* TabBarViewController.swift in Sources */,
 				C292359A2C02003500559A9D /* UserDefaultsKey.swift in Sources */,
+				C22DFCE02C09E4910047EC40 /* FilesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +585,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6QJHMJC74R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Skillbox Disk/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -444,6 +613,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6QJHMJC74R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Skillbox Disk/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -485,6 +655,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C21BCEE52C64E943006B8647 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C21BCEE62C64E943006B8647 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = C21BCEE62C64E943006B8647 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C27EDD2F2BF6254200E31686 /* Project object */;
 }

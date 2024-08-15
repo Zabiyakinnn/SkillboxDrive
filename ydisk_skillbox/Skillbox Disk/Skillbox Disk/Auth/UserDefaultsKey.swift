@@ -8,8 +8,12 @@
 import Foundation
 
 enum UserDefaultsKey {
-    static var saveToken = "token"
+    static var saveToken = "saveToken"
     static var saveAuth = "auth"
+}
+
+enum UserImage {
+    static var saveImage = "image"
 }
 
 struct Keys {

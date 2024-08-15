@@ -1,3 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
+${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework

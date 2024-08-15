@@ -11,16 +11,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let startVC = StartViewController()
-//        nav
-        let navController = UINavigationController(rootViewController: startVC)
-            
+        let token = UserDefaults.standard.string(forKey: UserDefaultsKey.saveToken)
+        
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = navController
+        if token != nil {
+            // Пользователь уже авторизован, открываем TabBarViewController
+            let tabBarVC = TabBarViewController()
+            window.rootViewController = tabBarVC
+        } else {
+            // Пользователь не авторизован, открываем StartViewController
+            let startVC = StartViewController()
+            let navController = UINavigationController(rootViewController: startVC)
+            window.rootViewController = navController
+        }
         self.window = window
         window.makeKeyAndVisible()
     }

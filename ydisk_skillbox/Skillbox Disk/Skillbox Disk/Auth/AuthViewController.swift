@@ -9,23 +9,27 @@ import UIKit
 import WebKit
 import SnapKit
 
-/// с помощью протокола передаем токен
+// с помощью протокола передаем токен
 protocol AuthViewControllerDelegate: AnyObject {
     func handleTokenChanged(token: String)
 }
 
 final class AuthViewController: UIViewController {
     
-//    private lazy var scheme = "https://oauth.yandex.ru/verification_code"
-    private let clientID = "d4464c6a218b417ea7bcba2985a2e669"
+    private let clientID = "52ca422fe65349ce9a3bf02799f11fca"
     
     weak var delegate: AuthViewControllerDelegate?
-    private let webView = WKWebView()
+    
+    private let webView: WKWebView = {
+        let webView = WKWebView()
+        return webView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(webView)
         setupeConstraint()
+        clearWebViewCache()
         
         guard let request = request else { return }
         webView.load(request) 
@@ -43,6 +47,18 @@ final class AuthViewController: UIViewController {
         return URLRequest(url: url)
     }
     
+    func clearWebViewCache() {
+        let dataStore = WKWebsiteDataStore.default()
+//        типы данных которые нужно очистить
+        let websiteDataTypes = Set([WKWebsiteDataTypeCookies, WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache])
+//        получение записей данных
+        dataStore.fetchDataRecords(ofTypes: websiteDataTypes) { records in
+//            проходим по каждоый записи и удаляем ее
+            for record in records {
+                dataStore.removeData(ofTypes: websiteDataTypes, for: [record], completionHandler: {})
+            }
+        }
+    }
 }
 
 extension AuthViewController {
@@ -66,10 +82,12 @@ extension AuthViewController: WKNavigationDelegate {
             
             if let getToken = getToken {
                 UserDefaults.standard.set(getToken, forKey: UserDefaultsKey.saveToken)
-                print("Token: - \(getToken)")
+                print("Token: ----------------- \(getToken)")
+//              уведомлние делегата о получении токена
+                delegate?.handleTokenChanged(token: getToken)
+                dismiss(animated: true, completion: nil)
             }
         }
         decisionHandler(.allow)
     }
-    
 }
