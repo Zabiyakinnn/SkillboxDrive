@@ -55,7 +55,7 @@ struct Items: Codable {
 }
 
 struct DiskUploaded: Codable {
-    let items: [UploadedFiles]?
+    let items: [Items]?
 }
 
 struct UploadedFiles: Codable {

@@ -54,7 +54,7 @@ class PublishedFileViewController: UIViewController {
         tableView.refreshControl = myRefreshControl
     }
     
-    func loadPublishedFile() {
+    func  loadPublishedFile() {
         DispatchQueue.main.async {
             let savedDisk = CoreDataManager.shared.fetchDisk()
 //            let totalSpace = savedDisk.first?.total_space

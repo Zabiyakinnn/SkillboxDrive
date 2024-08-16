@@ -51,13 +51,14 @@ class LastUploadedFilesViewController: UIViewController {
         tableView.refreshControl = myRefreshControl
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 //        DispatchQueue.main.async {
-//            self.activityIndicator.stopAnimating()
+            self.updateData()
+        activityIndicator.stopAnimating()
+
 //        }
-//        updateData()
-//    }
+    }
     
     @objc private func refresh(sender: UIRefreshControl) {
         updateData()

@@ -52,7 +52,7 @@ class UploadedFilesCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ viewModel: UploadedFiles) {
+    func configure(_ viewModel: Items) {
         filesName.text = viewModel.name
     
         if let size = viewModel.size {

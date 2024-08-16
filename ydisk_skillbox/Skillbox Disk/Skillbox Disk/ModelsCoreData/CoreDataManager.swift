@@ -106,6 +106,7 @@ public final class CoreDataManager: NSObject {
                     disk.size = item.size ?? 0
                     disk.mime_type = item.mime_type ?? ""
                     disk.path = item.path ?? ""
+                    
 //                    disk.total_space = totalSpace
 //                    disk.used_space = usedSpace
                 } else {
@@ -113,5 +114,6 @@ public final class CoreDataManager: NSObject {
                 }
             }
         }
+        appDelegate.saveContext()
     }
 }
