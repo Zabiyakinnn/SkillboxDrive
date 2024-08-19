@@ -42,7 +42,6 @@ struct Size: Codable {
 
 struct DiskResponce: Codable {
     let items: [Items]?
-//    let profileInfo: ProfileInfo?
 }
 
 struct Items: Codable {

@@ -14,7 +14,7 @@ class NoFilesViewController: UIViewController {
     
     private lazy var myLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextBlackAndWhite")
         label.font = .systemFont(ofSize: 15)
         label.textAlignment = .center
         label.numberOfLines = 2
@@ -32,7 +32,7 @@ class NoFilesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         self.title = "\(file.name ?? "Название файла")"
         view.addSubview(myLabel)
         view.addSubview(myImage)

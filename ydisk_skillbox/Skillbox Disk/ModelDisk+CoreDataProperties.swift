@@ -24,8 +24,22 @@ extension ModelDisk {
     @NSManaged public var size: Int64
     @NSManaged public var mime_type: String?
     @NSManaged public var path: String?
-//    @NSManaged public var total_space: Int
-//    @NSManaged public var used_space: Int
 }
 
 extension ModelDisk : Identifiable {}
+
+@objc(ModelProfileinfo)
+public class ModelProfileinfo: NSManagedObject {}
+
+extension ModelProfileinfo {
+
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<ModelProfileinfo> {
+        return NSFetchRequest<ModelProfileinfo>(entityName: "ModelProfileinfo")
+    }
+
+    @NSManaged public var total_space: Int64
+    @NSManaged public var used_space: Int64
+}
+
+extension ModelProfileinfo : Identifiable {}
+

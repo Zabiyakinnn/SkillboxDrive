@@ -24,6 +24,7 @@ class RenameFileViewController: UIViewController {
     private let textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.textColor = UIColor(named: "TextBlackAndWhite")
         textField.placeholder = "Укажите новое имя для файла"
         textField.borderStyle = .roundedRect
         textField.layer.shadowColor = UIColor.lightGray.cgColor //цвет тени
@@ -47,7 +48,7 @@ class RenameFileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Переименовать"
         setupView()
         setupConstraints()

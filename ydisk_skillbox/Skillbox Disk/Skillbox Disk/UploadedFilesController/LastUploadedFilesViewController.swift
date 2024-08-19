@@ -42,7 +42,6 @@ class LastUploadedFilesViewController: UIViewController {
         setupView()
     }
     
-    
     private func setupView() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
@@ -51,24 +50,16 @@ class LastUploadedFilesViewController: UIViewController {
         tableView.refreshControl = myRefreshControl
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        DispatchQueue.main.async {
-            self.updateData()
-        activityIndicator.stopAnimating()
-
-//        }
-    }
-    
     @objc private func refresh(sender: UIRefreshControl) {
         updateData()
         activityIndicator.stopAnimating()
         sender.endRefreshing()
     }
     
-    
     private func updateData() {
-        activityIndicator.startAnimating()
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
         let queryItems = [
             URLQueryItem(name: "media_type", value: "image, compressed, audio, document, text, video"),
             URLQueryItem(name: "limit", value: "300")

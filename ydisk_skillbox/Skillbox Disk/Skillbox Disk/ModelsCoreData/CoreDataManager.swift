@@ -12,9 +12,9 @@ public final class CoreDataManager: NSObject {
     public static let shared = CoreDataManager()
     private override init() {}
     
-    private var appDelegate: AppDelegate {
+    private lazy var appDelegate: AppDelegate = {
         UIApplication.shared.delegate as! AppDelegate
-    }
+    }()
     
     private var context: NSManagedObjectContext {
         appDelegate.persistentContainer.viewContext
@@ -26,8 +26,6 @@ public final class CoreDataManager: NSObject {
                            size: Int64,
                            mime_type: String,
                            path: String
-//                           total_space: Int,
-//                           used_space: Int
     ) {
         DispatchQueue.main.async {
             print("Создание диска")
@@ -43,9 +41,7 @@ public final class CoreDataManager: NSObject {
             disk.size = size
             disk.mime_type = mime_type
             disk.path = path
-//            disk.total_space = total_space
-//            disk.used_space = used_space
-            
+
             self.appDelegate.saveContext()
         }
     }
@@ -64,7 +60,7 @@ public final class CoreDataManager: NSObject {
         }
     }
     
-    //    Загрузка диска
+    //    Загрузка диска Model Disk
     public func fetchDisk() -> [ModelDisk] {
         let fetchRequest: NSFetchRequest<ModelDisk> = ModelDisk.fetchRequest()
         do {
@@ -94,9 +90,6 @@ public final class CoreDataManager: NSObject {
                 return
             }
             
-//            let totalSpace = response.profileInfo?.total_space ?? 0
-//            let usedSpace = response.profileInfo?.used_space ?? 0
-            
             for item in items {
                 if !self.diskExists(withName: item.name ?? "") {
                     let disk = ModelDisk(context: self.context)
@@ -106,14 +99,38 @@ public final class CoreDataManager: NSObject {
                     disk.size = item.size ?? 0
                     disk.mime_type = item.mime_type ?? ""
                     disk.path = item.path ?? ""
-                    
-//                    disk.total_space = totalSpace
-//                    disk.used_space = usedSpace
                 } else {
                     //                    print("Диск с именем \(item.name ?? "") уже существует.")
                 }
             }
         }
         appDelegate.saveContext()
+    }
+//    Метод сохранения ProfileInfo
+    func saveProfileInfo(profileInfo: ProfileInfo) {
+        DispatchQueue.main.async {
+            guard let profileEntityDescription = NSEntityDescription.entity(forEntityName: "ModelProfileinfo", in: self.context) else {
+                print("Описание объекта ModelDisk не найдено")
+                return
+            }
+//            Создание объекта ModelProfileInfo и заполнение его данными
+            let profile = ModelProfileinfo(entity: profileEntityDescription, insertInto: self.context)
+            profile.total_space = Int64(profileInfo.total_space ?? 0)
+            profile.used_space = Int64(profileInfo.used_space ?? 0)
+//            print("Сохраненные данные \(profile.total_space) ---- \(profile.used_space)")
+            self.appDelegate.saveContext()
+        }
+    }
+    //    Загрузка диска ModelProfileInfo
+    public func fetchDiskProfileInfo() -> [ModelProfileinfo] {
+        let fetchRequest: NSFetchRequest<ModelProfileinfo> = ModelProfileinfo.fetchRequest()
+        do {
+            let results = try context.fetch(fetchRequest)
+            print("RESULT \(results)")
+            return results
+        } catch {
+            print("Ошибка получения: \(error.localizedDescription)")
+        }
+        return []
     }
 }

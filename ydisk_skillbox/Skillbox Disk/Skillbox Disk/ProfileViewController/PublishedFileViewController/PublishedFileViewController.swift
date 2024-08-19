@@ -54,11 +54,9 @@ class PublishedFileViewController: UIViewController {
         tableView.refreshControl = myRefreshControl
     }
     
-    func  loadPublishedFile() {
+    func loadPublishedFile() {
         DispatchQueue.main.async {
             let savedDisk = CoreDataManager.shared.fetchDisk()
-//            let totalSpace = savedDisk.first?.total_space
-//            let usedSpace = savedDisk.first?.used_space
             let items = savedDisk.map { disk -> Items in
 //                print("----------\(savedDisk)")
                 return Items(name: disk.name,
@@ -68,7 +66,6 @@ class PublishedFileViewController: UIViewController {
                              path: disk.path,
                              mime_type: disk.mime_type)
             }
-//            let profileInfo = ProfileInfo(total_space: totalSpace, used_space: usedSpace)
             self.publishedFileData = DiskResponce(items: items)
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
@@ -101,6 +98,7 @@ class PublishedFileViewController: UIViewController {
         }
         monitor.start(queue: queue)
     }
+    
     
     private func fetchDataFromNetwork() {
         let queryItems = [
@@ -228,3 +226,4 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
         return 80
     }
 }
+

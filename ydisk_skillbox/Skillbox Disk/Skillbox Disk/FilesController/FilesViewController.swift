@@ -159,6 +159,9 @@ extension FilesViewController: UITableViewDataSource, UITableViewDelegate {
                         case "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel":
                             let openWKWebVC = WKWebViewController(docURL: url, file: itemList)
                             self?.navigationController?.pushViewController(openWKWebVC, animated: true)
+                        case "application/zip", "audio/mpeg":
+                            let unknownFileVC = UnknownFileViewController(fileList: itemList)
+                            self?.navigationController?.pushViewController(unknownFileVC, animated: true)
                         default:
                             print("неизвестный тип данных - \(mimeType)")
                         }
