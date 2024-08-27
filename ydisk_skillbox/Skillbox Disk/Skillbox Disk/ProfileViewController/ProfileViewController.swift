@@ -149,7 +149,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
                     self.loadProfileInfo()
 //                    self?.tableView.reloadData()
                     print("Загрузка из core data")
-                    self.showAlert(title: "Нет соединения с интернетом", message: "Загрузка из core data")
+                    self.showAlert(title: "Нет соеденения с интернетом", message: "Повторите попытку позже")
                 }
                 monitor.cancel()
             }
@@ -202,7 +202,7 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
                 } else {
                     print("Токен не найден")
                 }
-                
+                CoreDataManager.shared.deleteDisk()
                 UserDefaults.standard.removeObject(forKey: UserDefaultsKey.saveToken)
                 UserDefaults.standard.synchronize()
                 

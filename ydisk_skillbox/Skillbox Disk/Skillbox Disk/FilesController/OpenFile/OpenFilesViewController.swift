@@ -10,7 +10,7 @@ import SnapKit
 
 class OpenFilesViewController: UIViewController {
     
-    private let file: ItemList
+    private let filesData: ItemList?
     let filesCell = "filesCell"
     
     private lazy var tableView: UITableView = {
@@ -21,7 +21,7 @@ class OpenFilesViewController: UIViewController {
     }()
     
     init(fileList: ItemList) {
-        self.file = fileList
+        self.filesData = fileList
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,7 +39,7 @@ class OpenFilesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "\(file.name ?? "Название файла")"
+        self.title = "\(filesData?.name ?? "Название файла")"
     }
     
     private func setupeView() {
@@ -50,7 +50,7 @@ class OpenFilesViewController: UIViewController {
 
 //MARK: - SetupConstraint
 extension OpenFilesViewController {
-    
+
     private func setupConstraint() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -63,7 +63,7 @@ extension OpenFilesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: filesCell, for: indexPath) as? FilesCell
-        guard let items = file._embedded?.items else {
+        guard let items = filesData?._embedded?.items else {
             return cell ?? UITableViewCell()
         }
         
@@ -74,10 +74,63 @@ extension OpenFilesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
+        
+        guard let items = filesData?._embedded?.items, items.count > indexPath.row else {
+            return
+        }
+        let viewModel = items[indexPath.row]
+        let pathFile = viewModel.path ?? ""
+//        print("\(pathFile) получен")
+        NetworkService.shared.openFile(with: pathFile) { [weak self] itemList in
+            guard let itemList = itemList else {
+                print("Не удалось получить itemList")
+                return
+            }
+            DispatchQueue.main.async {
+                if let items = itemList._embedded?.items, !items.isEmpty {
+                    let openFileVC = OpenFilesViewController(fileList: itemList)
+                    self?.navigationController?.pushViewController(openFileVC, animated: true)
+                } else {
+                    let mimeType = itemList.mime_type ?? ""
+//                    print("mimeType-------\(itemList.mime_type ?? "")")
+//                    print("type---------\(itemList.type ?? "")")
+                    if let urlString = itemList.file, let url = URL(string: urlString) {
+                        print("Получен URL: \(url)")
+                        switch mimeType {
+                        case "image/png", "image/svg", "image/jpeg", "image/heic":
+                            let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
+                            let openImageVC = ImageViewController(viewModel: imageViewModel)
+                            imageViewModel.fileRenamed = { [weak self] in
+                                self?.tableView.reloadData()
+                            }
+                            self?.navigationController?.pushViewController(openImageVC, animated: true)
+                        case "application/pdf":
+                            if UIApplication.shared.canOpenURL(url) {
+                                let openPDFVC = PDFViewController(pdfURL: url, file: itemList)
+                                self?.navigationController?.pushViewController(openPDFVC, animated: true)
+                            } else {
+                                print("Некорректный URL\(url)")
+                            }
+                        case "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel":
+                            let openWKWebVC = WKWebViewController(docURL: url, file: itemList)
+                            self?.navigationController?.pushViewController(openWKWebVC, animated: true)
+                        case "application/zip", "audio/mpeg":
+                            let unknownFileVC = UnknownFileViewController(fileList: itemList)
+                            self?.navigationController?.pushViewController(unknownFileVC, animated: true)
+                        default:
+                            print("неизвестный тип данных - \(mimeType)")
+                        }
+                    } else {
+                        let noFileVC = NoFilesViewController(fileList: itemList)
+                        self?.navigationController?.pushViewController(noFileVC, animated: true)
+                    }
+                }
+                
+            }
+        }
+    }    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return file._embedded?.items.count ?? 0
+        return filesData?._embedded?.items.count ?? 0
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80

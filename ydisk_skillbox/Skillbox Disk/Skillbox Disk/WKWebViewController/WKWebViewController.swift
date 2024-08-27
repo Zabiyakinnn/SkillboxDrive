@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class WKWebViewController: UIViewController {
+final class WKWebViewController: UIViewController {
     
     var docURL: URL
     private let file: ItemList

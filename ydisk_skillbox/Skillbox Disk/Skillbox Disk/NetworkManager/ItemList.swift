@@ -41,7 +41,7 @@ struct Size: Codable {
 }
 
 struct DiskResponce: Codable {
-    let items: [Items]?
+    var items: [Items]?
 }
 
 struct Items: Codable {
@@ -51,19 +51,7 @@ struct Items: Codable {
     let size: Int64?
     let path: String?
     let mime_type: String?
-}
-
-struct DiskUploaded: Codable {
-    let items: [Items]?
-}
-
-struct UploadedFiles: Codable {
-    let name: String?
-    let preview: String?
-    let created: String?
-    let size: Int64?
-    let path: String?
-    let mime_type: String?
+    let resource_id: String?
 }
 
 struct ProfileInfo: Codable {

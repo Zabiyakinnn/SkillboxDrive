@@ -6,7 +6,19 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="path" optional="YES" attributeType="String"/>
         <attribute name="preview" optional="YES" attributeType="String"/>
+        <attribute name="resource_id" optional="YES" attributeType="String"/>
         <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ModelFilesDisk" representedClassName="ModelFilesDisk" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="String"/>
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="href" optional="YES" attributeType="String"/>
+        <attribute name="mime_type" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="path" optional="YES" attributeType="String"/>
+        <attribute name="preview" optional="YES" attributeType="String"/>
+        <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ModelProfileinfo" representedClassName="ModelProfileinfo" syncable="YES">
         <attribute name="total_space" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

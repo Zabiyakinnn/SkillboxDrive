@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-class ImageViewController: UIViewController {
+final class ImageViewController: UIViewController {
     
     private let viewModel: ImageViewModel
     private let contentView = UIView()
@@ -235,7 +235,15 @@ class ImageViewController: UIViewController {
     }
     
     @objc private func moreButtonTapped() {
-        let renameVC = RenameFileViewController(file: viewModel.item, fileName: viewModel.imageName ?? "", fileImage: viewModel.image)
+        let renameViewModel = RenameFileViewModel(file: viewModel.item, fileName: viewModel.imageName ?? "", fileImage: viewModel.image)
+        let renameVC = RenameFileViewController(viewModel: renameViewModel)
+//        let renameVC = RenameFileViewController(file: viewModel.item, fileName: viewModel.imageName ?? "", fileImage: viewModel.image)
+        renameViewModel.fileRenamed = { [ weak self ] newFileName in
+            guard let self = self else { return }
+            self.nameFileLabel.text = newFileName
+            self.viewModel.imageName = newFileName
+            viewModel.fileRenamed?()
+        }
         self.navigationController?.pushViewController(renameVC, animated: true)
     }
     

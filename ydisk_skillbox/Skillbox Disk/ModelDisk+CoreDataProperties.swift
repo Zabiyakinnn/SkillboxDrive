@@ -24,6 +24,7 @@ extension ModelDisk {
     @NSManaged public var size: Int64
     @NSManaged public var mime_type: String?
     @NSManaged public var path: String?
+    @NSManaged public var resource_id: String?
 }
 
 extension ModelDisk : Identifiable {}

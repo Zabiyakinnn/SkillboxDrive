@@ -7,8 +7,9 @@
 
 import UIKit
 import SnapKit
+import Network
 
-class FilesViewController: UIViewController {
+final class FilesViewController: UIViewController {
     
     private var filesData: ItemList?
     let filesCell = "filesCell"
@@ -79,6 +80,15 @@ class FilesViewController: UIViewController {
         }
     }
     
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ок", style: .default)
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.navigationController?.present(alertController, animated: true)
+        }
+    }
+    
     @objc private func refresh(sender: UIRefreshControl) {
         updateData()
         activityIndicator.stopAnimating()
@@ -89,11 +99,9 @@ class FilesViewController: UIViewController {
 //MARK: - SetupContraint
 extension FilesViewController {
     private func setupContraint() {
-        
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -140,14 +148,18 @@ extension FilesViewController: UITableViewDataSource, UITableViewDelegate {
                     self?.navigationController?.pushViewController(openFileVC, animated: true)
                 } else {
                     let mimeType = itemList.mime_type ?? ""
-                    print("mimeType-------\(itemList.mime_type ?? "")")
-                    print("type---------\(itemList.type ?? "")")
+//                    print("mimeType-------\(itemList.mime_type ?? "")")
+//                    print("type---------\(itemList.type ?? "")")
                     if let urlString = itemList.file, let url = URL(string: urlString) {
                         print("Получен URL: \(url)")
                         switch mimeType {
                         case "image/png", "image/svg", "image/jpeg", "image/heic":
                             let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                             let openImageVC = ImageViewController(viewModel: imageViewModel)
+                            imageViewModel.fileRenamed = { [weak self] in
+                                self?.updateData()
+                                self?.tableView.reloadData()
+                            }
                             self?.navigationController?.pushViewController(openImageVC, animated: true)
                         case "application/pdf":
                             if UIApplication.shared.canOpenURL(url) {

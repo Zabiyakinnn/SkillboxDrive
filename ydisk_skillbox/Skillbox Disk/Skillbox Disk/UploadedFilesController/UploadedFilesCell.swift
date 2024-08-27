@@ -80,9 +80,9 @@ class UploadedFilesCell: UITableViewCell {
             
             // Загрузка изображения с использованием токена аутентификации
             switch (viewModel.preview, viewModel.mime_type) {
-            case (nil, "application/zip"):
+            case (nil, "application/zip"), ("", "application/zip"):
                 imageFile.image = UIImage(named: "zip")
-            case(nil, "audio/mpeg"):
+            case(nil, "audio/mpeg"), ("", "audio/mpeg"):
                 imageFile.image = UIImage(named: "music")
             default:
                 if let token = UserDefaults.standard.string(forKey: UserDefaultsKey.saveToken) {
@@ -99,6 +99,7 @@ class UploadedFilesCell: UITableViewCell {
                             self.imageFile.image = image
                         }
                     }
+                    
                 } else {
                     print("Отсутствие токена авторизации")
                 }

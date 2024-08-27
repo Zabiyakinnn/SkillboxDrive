@@ -10,7 +10,7 @@ import SnapKit
 import Network
 import CoreData
 
-class PublishedFileViewController: UIViewController {
+final class PublishedFileViewController: UIViewController {
     
     private var publishedFileData: DiskResponce?
     var publishedFileCell = "publishedFileCell"
@@ -30,7 +30,7 @@ class PublishedFileViewController: UIViewController {
     }()
     
     private lazy var myRefreshControl: UIRefreshControl = {
-       let refreshControl = UIRefreshControl()
+        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         return refreshControl
     }()
@@ -54,17 +54,18 @@ class PublishedFileViewController: UIViewController {
         tableView.refreshControl = myRefreshControl
     }
     
-    func loadPublishedFile() {
+    private func loadPublishedFile() {
         DispatchQueue.main.async {
             let savedDisk = CoreDataManager.shared.fetchDisk()
             let items = savedDisk.map { disk -> Items in
-//                print("----------\(savedDisk)")
+                //                print("----------\(savedDisk)")
                 return Items(name: disk.name,
                              preview: disk.preview,
                              created: disk.created,
                              size: disk.size,
                              path: disk.path,
-                             mime_type: disk.mime_type)
+                             mime_type: disk.mime_type,
+                             resource_id: disk.resource_id)
             }
             self.publishedFileData = DiskResponce(items: items)
             self.tableView.reloadData()
@@ -73,9 +74,6 @@ class PublishedFileViewController: UIViewController {
     }
     
     private func updateData() {
-        DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
-        }
         let monitor = NWPathMonitor() //Монитор отслеживания состояния сети
         let queue = DispatchQueue(label: "NetworkMonitor")
         
@@ -91,7 +89,7 @@ class PublishedFileViewController: UIViewController {
                     self.loadPublishedFile()
 //                    self?.tableView.reloadData()
                     print("Загрузка из core data")
-                    self.showAlert(title: "Нет соединения с интернетом", message: "Загрузка из core data")
+                    self.showNoInternetConnectionView()
                 }
                 monitor.cancel()
             }
@@ -101,6 +99,9 @@ class PublishedFileViewController: UIViewController {
     
     
     private func fetchDataFromNetwork() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
         let queryItems = [
             URLQueryItem(name: "type", value: "dir, file"),
             URLQueryItem(name: "limit", value: "300")
@@ -116,7 +117,8 @@ class PublishedFileViewController: UIViewController {
                         self.publishedFileData = newFiles
                         DispatchQueue.main.async {
                             CoreDataManager.shared.saveDisks(from: newFiles)
-                            self.loadPublishedFile()
+//                            self.loadPublishedFile()
+                            self.tableView.reloadData()
                         }
                     } catch {
                         print("Ошибка декодирования \(error)")
@@ -129,10 +131,10 @@ class PublishedFileViewController: UIViewController {
             }
         }
     }
-        
+    
     @objc private func refresh(sender: UIRefreshControl) {
-        updateData()
         activityIndicator.stopAnimating()
+        updateData()
         sender.endRefreshing()
     }
     
@@ -142,6 +144,34 @@ class PublishedFileViewController: UIViewController {
         alertController.addAction(okAction)
         DispatchQueue.main.async {
             self.navigationController?.present(alertController, animated: true)
+        }
+    }
+    
+    private func showNoInternetConnectionView() {
+        NotificationUtils.showNoInternetConnectionView(on: self)
+    }
+    
+    private func showDeleteFile() {
+        NotificationUtils.showDeliteFile(on: self)
+    }
+    
+    private func deleteFile(at indexPath: IndexPath) {
+        guard let item = publishedFileData?.items?[indexPath.row] else { return }
+        let filePath = item.path
+        
+        NetworkService.shared.deleteFile(url: "https://cloud-api.yandex.net/v1/disk/resources", filePath: filePath ?? "") { result in
+            switch result {
+            case .success():
+                DispatchQueue.main.async {
+//              Удалить элемент и обновить таблицу
+                    CoreDataManager.shared.deleteFile(byPath: filePath ?? "")
+                    self.publishedFileData?.items?.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.showDeleteFile()
+                }
+            case .failure(let error):
+                print("Не удалось удалить файл: \(error.localizedDescription)")
+            }
         }
     }
 }
@@ -172,6 +202,9 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
         guard let items = publishedFileData?.items, items.count > indexPath.row else {
             return cell ?? UITableViewCell()
         }
+        cell?.onDeleteTapped = { [weak self] in
+            self?.deleteFile(at: indexPath)
+        }
         cell?.viewController = self
         let currentFile = items[indexPath.row]
         cell?.configure(currentFile)
@@ -199,6 +232,10 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
                     case "image/png", "image/svg", "image/jpeg", "image/heic":
                         let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                         let openImageVC = ImageViewController(viewModel: imageViewModel)
+                        imageViewModel.fileRenamed = { [ weak self ] in
+                            self?.updateData()
+                            self?.tableView.reloadData()
+                        }
                         self?.navigationController?.pushViewController(openImageVC, animated: true)
                     case "application/pdf":
 //                        print("PDF URL: \(url)")
@@ -211,7 +248,7 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
                     case "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel":
                         let openWKWebViewVC = WKWebViewController(docURL: url, file: itemList)
                         self?.navigationController?.pushViewController(openWKWebViewVC, animated: true)
-                    case "application/zip", "audio/mpeg":
+                    case "application/zip", "audio/mpeg", "video/mp4":
                         let unknownFileVC = UnknownFileViewController(fileList: itemList)
                         self?.navigationController?.pushViewController(unknownFileVC, animated: true)
                     default:
@@ -226,4 +263,6 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
         return 80
     }
 }
+
+
 

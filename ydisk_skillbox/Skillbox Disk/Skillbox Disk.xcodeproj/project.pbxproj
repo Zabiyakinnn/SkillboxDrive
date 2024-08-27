@@ -12,12 +12,15 @@
 		C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEE52C64E943006B8647 /* CoreData.xcdatamodeld */; };
 		C21BCEEC2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEEA2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift */; };
 		C21BCEEE2C65FA92006B8647 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */; };
+		C22140A82C7631DB002F0A7D /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22140A72C7631DB002F0A7D /* NotificationUtils.swift */; };
 		C22DFCE02C09E4910047EC40 /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */; };
 		C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22DFCE12C09F5DF0047EC40 /* ItemList.swift */; };
 		C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */; };
 		C260436C2C11DBB300920752 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260436B2C11DBB300920752 /* ProfileViewController.swift */; };
 		C260436F2C1C5C0F00920752 /* OpenFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260436E2C1C5C0F00920752 /* OpenFilesViewController.swift */; };
 		C268B07E2C0B348E00717125 /* FilesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268B07D2C0B348E00717125 /* FilesCell.swift */; };
+		C27379032C7E3374005D4B84 /* RenameFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27379022C7E3374005D4B84 /* RenameFileViewModel.swift */; };
+		C27379052C7E3B0B005D4B84 /* RenameFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27379042C7E3B0B005D4B84 /* RenameFileViewController.swift */; };
 		C27EDD3B2BF6254200E31686 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3A2BF6254200E31686 /* AppDelegate.swift */; };
 		C27EDD3D2BF6254200E31686 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3C2BF6254200E31686 /* SceneDelegate.swift */; };
 		C27EDD3F2BF6254200E31686 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27EDD3E2BF6254200E31686 /* StartViewController.swift */; };
@@ -35,7 +38,6 @@
 		C29D5E182C37DC55007B6855 /* PublishedFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */; };
 		C29DC2532C46579D0072B135 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DC2522C46579D0072B135 /* PDFViewController.swift */; };
 		C29DF4D12C4AAC6700AE5248 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D02C4AAC6700AE5248 /* NetworkService.swift */; };
-		C29DF4D42C4BB14400AE5248 /* RenameFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */; };
 		C29DF4D92C52501E00AE5248 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */; };
 		C29DF4DB2C526D5B00AE5248 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */; };
 		C2C205612C412D5900CA146E /* NoFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C205602C412D5900CA146E /* NoFilesViewController.swift */; };
@@ -48,12 +50,15 @@
 		C21BCEE62C64E943006B8647 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		C21BCEEA2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelDisk+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		C22140A72C7631DB002F0A7D /* NotificationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUtils.swift; sourceTree = "<group>"; };
 		C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
 		C22DFCE12C09F5DF0047EC40 /* ItemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemList.swift; sourceTree = "<group>"; };
 		C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedFileViewController.swift; sourceTree = "<group>"; };
 		C260436B2C11DBB300920752 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C260436E2C1C5C0F00920752 /* OpenFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFilesViewController.swift; sourceTree = "<group>"; };
 		C268B07D2C0B348E00717125 /* FilesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCell.swift; sourceTree = "<group>"; };
+		C27379022C7E3374005D4B84 /* RenameFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameFileViewModel.swift; sourceTree = "<group>"; };
+		C27379042C7E3B0B005D4B84 /* RenameFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameFileViewController.swift; sourceTree = "<group>"; };
 		C27EDD372BF6254200E31686 /* Skillbox Disk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Skillbox Disk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27EDD3A2BF6254200E31686 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C27EDD3C2BF6254200E31686 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,7 +78,6 @@
 		C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedFileCell.swift; sourceTree = "<group>"; };
 		C29DC2522C46579D0072B135 /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		C29DF4D02C4AAC6700AE5248 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameFileViewController.swift; sourceTree = "<group>"; };
 		C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		C2C205602C412D5900CA146E /* NoFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilesViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +122,14 @@
 				C21BCEED2C65FA92006B8647 /* CoreDataManager.swift */,
 			);
 			path = ModelsCoreData;
+			sourceTree = "<group>";
+		};
+		C22140A62C7631BA002F0A7D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C22140A72C7631DB002F0A7D /* NotificationUtils.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		C22DFCDE2C09E4630047EC40 /* FilesController */ = {
@@ -180,6 +192,7 @@
 		C27EDD392BF6254200E31686 /* Skillbox Disk */ = {
 			isa = PBXGroup;
 			children = (
+				C22140A62C7631BA002F0A7D /* Utilities */,
 				C21BCEE82C65F4F0006B8647 /* ModelsCoreData */,
 				C29DF4D72C4FB33100AE5248 /* ImageViewController */,
 				C29DF4D22C4BB12800AE5248 /* RenameFileController */,
@@ -275,7 +288,8 @@
 		C29DF4D22C4BB12800AE5248 /* RenameFileController */ = {
 			isa = PBXGroup;
 			children = (
-				C29DF4D32C4BB14400AE5248 /* RenameFileViewController.swift */,
+				C27379042C7E3B0B005D4B84 /* RenameFileViewController.swift */,
+				C27379022C7E3374005D4B84 /* RenameFileViewModel.swift */,
 			);
 			path = RenameFileController;
 			sourceTree = "<group>";
@@ -411,7 +425,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C29DF4D42C4BB14400AE5248 /* RenameFileViewController.swift in Sources */,
 				C27EDD552BF63D4300E31686 /* StartViewModel.swift in Sources */,
 				C21BCEEC2C65F50A006B8647 /* ModelDisk+CoreDataProperties.swift in Sources */,
 				C260436F2C1C5C0F00920752 /* OpenFilesViewController.swift in Sources */,
@@ -421,11 +434,13 @@
 				C21BCEE12C64A560006B8647 /* UnknownFileViewController.swift in Sources */,
 				C28978312C1088A10070E178 /* UploadedFilesCell.swift in Sources */,
 				C29DC2532C46579D0072B135 /* PDFViewController.swift in Sources */,
+				C27379052C7E3B0B005D4B84 /* RenameFileViewController.swift in Sources */,
 				C27EDD3B2BF6254200E31686 /* AppDelegate.swift in Sources */,
 				C27EDD3D2BF6254200E31686 /* SceneDelegate.swift in Sources */,
 				C29D5E182C37DC55007B6855 /* PublishedFileCell.swift in Sources */,
 				C27EDD5F2BF65E3400E31686 /* AuthViewController.swift in Sources */,
 				C29DF4D92C52501E00AE5248 /* ImageViewModel.swift in Sources */,
+				C22140A82C7631DB002F0A7D /* NotificationUtils.swift in Sources */,
 				C260436C2C11DBB300920752 /* ProfileViewController.swift in Sources */,
 				C268B07E2C0B348E00717125 /* FilesCell.swift in Sources */,
 				C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */,
@@ -434,6 +449,7 @@
 				C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */,
 				C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */,
 				C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */,
+				C27379032C7E3374005D4B84 /* RenameFileViewModel.swift in Sources */,
 				C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */,
 				C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */,
 				C289782D2C1081C00070E178 /* LastUploadedFilesViewController.swift in Sources */,

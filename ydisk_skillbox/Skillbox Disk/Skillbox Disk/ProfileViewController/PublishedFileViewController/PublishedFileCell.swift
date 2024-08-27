@@ -12,6 +12,7 @@ import SDWebImage
 class PublishedFileCell: UITableViewCell {
     
     weak var viewController: UIViewController? = nil
+    var onDeleteTapped: (() -> Void)?
     
     private var fileName: String?
     
@@ -93,9 +94,9 @@ class PublishedFileCell: UITableViewCell {
             let url = URL(string: viewModel.preview ?? "https://cm.author.today/content/2023/05/11/c12a9507922b470998f3d966e4e3264c.jpg")
             // Загрузка изображения с использованием токена аутентификации
             switch (viewModel.preview, viewModel.mime_type) {
-            case ("", "application/zip"):
+            case (nil, "application/zip"), ("", "application/zip"):
                 imageFile.image = UIImage(named: "zip")
-            case ("", "audio/mpeg"):
+            case (nil, "audio/mpeg"), ("", "audio/mpeg"):
                 imageFile.image = UIImage(named: "music")
             default:
                 imageFile.image = nil
@@ -131,7 +132,9 @@ class PublishedFileCell: UITableViewCell {
             message: nil,
             preferredStyle: .actionSheet
         )
-        let deleteFile = UIAlertAction(title: "Убрать публикацию", style: .destructive, handler: nil)
+        let deleteFile = UIAlertAction(title: "Убрать публикацию", style: .destructive) { _ in
+            self.onDeleteTapped?()
+        }
         let destructiveAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
         alertController.addAction(deleteFile)
         alertController.addAction(destructiveAction)

@@ -17,6 +17,8 @@ class ImageViewModel {
     var imageName: String?
     var formattedDate: String?
     
+//  Предача информации об удалении изображения в предъидущей контроллер
+    var fileRenamed: (() -> Void)?
 //  Успешная загрузка изображения
     var onImageLoaded: (() -> Void)?
 //  Ошибка загрузки изображения
@@ -34,7 +36,7 @@ class ImageViewModel {
         loadImage()
         formatDateString()
     }
-    
+//    Загрузка изображения
     private func loadImage() {
         // Создание ключ-кеша используя имя элемента или URL
         let cacheKey = item.name ?? imageURL.absoluteString

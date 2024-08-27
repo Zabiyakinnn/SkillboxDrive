@@ -8,12 +8,13 @@
 
 import UIKit
 
-class NetworkService {
+public final class NetworkService {
     
     static let shared = NetworkService()
     private var filesData: ItemList?
     var onProfileInfoReceived: ((Int, Int) -> Void)?
     
+//Интернет запрос для получения данных в таблицу с разными URL
     func fetchData(endpoint: String, queryItems: [URLQueryItem], completion: @escaping (Result<Data, Error>) -> Void) {
         var components = URLComponents(string: endpoint)
         components?.queryItems = queryItems
@@ -55,6 +56,7 @@ class NetworkService {
         task.resume()
     }
     
+//Интернет запрос для откртия файла по path
     func openFile(with path: String, completion: @escaping (ItemList?) -> Void) {
         var components = URLComponents(string: "https://cloud-api.yandex.net/v1/disk/resources")
         components?.queryItems = [URLQueryItem(name: "path", value: path)]
@@ -89,6 +91,7 @@ class NetworkService {
         task.resume()
     }
     
+//Интернет запрос для полученния данных профиля (свободное и занятое место на диске)
     func profileInfoData() {
         let components = URLComponents(string: "https://cloud-api.yandex.net/v1/disk/")
         
@@ -130,7 +133,7 @@ class NetworkService {
         task.resume()
     }
     
-    
+//Запрос на переименование файла
     func renameFile(url: String, fromPath: String, toPath: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let url = URL(string: url) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
@@ -180,6 +183,7 @@ class NetworkService {
         task.resume()
     }
     
+//Зарос на удаление файла
     func deleteFile(url: String, filePath: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let url = URL(string: url) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))

@@ -1,18 +1,15 @@
 //
-//  RenameFileViewController.swift
+//  RenameFileViewControllerMVVM.swift
 //  Skillbox Disk
 //
-//  Created by Дмитрий Забиякин on 20.07.2024.
+//  Created by Дмитрий Забиякин on 27.08.2024.
 //
 
 import UIKit
-import SnapKit
 
 class RenameFileViewController: UIViewController {
     
-    private var file: ItemList
-    private var fileName: String
-    private let fileImage: UIImage?
+    private var viewModel: RenameFileViewModel
     
     private let activityIndicatorRenameFile: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
@@ -35,10 +32,8 @@ class RenameFileViewController: UIViewController {
         return textField
     }()
     
-    init(file: ItemList, fileName: String, fileImage: UIImage?) {
-        self.file = file
-        self.fileName = fileName
-        self.fileImage = fileImage
+    init(viewModel: RenameFileViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,18 +43,18 @@ class RenameFileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        title = "Переименовать"
         setupView()
         setupConstraints()
-        textField.text = fileName
-        if let image = fileImage {
+        textField.text = viewModel.fileName
+        if let image = viewModel.fileImage {
             setLeftImage(image: image)
         }
         setRightButton()
     }
     
     private func setupView() {
+        view.backgroundColor = .systemBackground
+        title = "Переименовать"
         view.addSubview(textField)
         view.addSubview(activityIndicatorRenameFile)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -113,44 +108,24 @@ class RenameFileViewController: UIViewController {
     
     @objc private func renameFile() {
         guard let newFileName = textField.text, !newFileName.isEmpty else {
-                let alertController = UIAlertController(title: "Ошибка", message: "Имя файла не может быть пустым", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .default)
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-                return
+            let alertController = UIAlertController(title: "Ошибка", message: "Имя файла не может быть пустым", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ок", style: .default)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            return
         }
-        let fromPath = file.path
-//      получаем формат файла
-        let fileExtension = (fromPath! as NSString).pathExtension
-        let newFilePathExtension: String
-        if fileExtension.isEmpty {
-//            если формат файла пустой
-            newFilePathExtension = newFileName
-        } else {
-//            если формат файла не пустой, добавляем его если оно отсутствует в новом имени
-            if newFileName.hasSuffix(".\(fileExtension)") {
-                newFilePathExtension = newFileName
-            } else {
-                newFilePathExtension = newFileName + ".\(fileExtension)"
-            }
-        }
-//        новый путь с новым именем и расширением
-        let toPath = (fromPath! as NSString).deletingLastPathComponent + "/" + newFilePathExtension
+        
+        viewModel.fileName = newFileName
         DispatchQueue.main.async {
             self.activityIndicatorRenameFile.startAnimating()
         }
-        
-        NetworkService.shared.renameFile(url: "https://cloud-api.yandex.net/v1/disk/resources/move", fromPath: fromPath!, toPath: toPath) { result in
+        viewModel.renameFile { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case .success:
-                print("Имя файла изменено")
-                if let existingDisk = CoreDataManager.shared.fetchDisk().first(where: { $0.path == fromPath }) {
-                    existingDisk.name = newFileName
-                    existingDisk.path = toPath
-                    CoreDataManager.shared.fetchDisk()
-                }
+            case .success(let newFileName):
                 DispatchQueue.main.async {
                     self.activityIndicatorRenameFile.stopAnimating()
+                    print("Имя файла изменено! \(newFileName) новое имя файла")
                     let alertController = UIAlertController(title: "Успешно", message: "Имя файла изменено", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
                         self.navigationController?.popViewController(animated: true)
@@ -159,14 +134,11 @@ class RenameFileViewController: UIViewController {
                     self.present(alertController, animated: true, completion: nil)
                 }
             case .failure(let error):
-                print("Ошибка переименования файла - \(error)")
-                DispatchQueue.main.async {
-                    self.activityIndicatorRenameFile.stopAnimating()
-                    let alertController = UIAlertController(title: "Ошибка", message: "Не удалось изменить имя файла", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "Ок", style: .default)
-                    alertController.addAction(okAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
+                print("Ошибка переименования файла \(error.localizedDescription)")
+                let alertController = UIAlertController(title: "Ошибка", message: "Не удалось изменить имя файла", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ок", style: .default)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
             }
         }
     }
