@@ -44,12 +44,12 @@ final class PublishedFileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         setupeView()
+        setupConstraint()
     }
     
     private func setupeView() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        setupConstraint()
         updateData()
         tableView.refreshControl = myRefreshControl
     }
@@ -58,7 +58,7 @@ final class PublishedFileViewController: UIViewController {
         DispatchQueue.main.async {
             let savedDisk = CoreDataManager.shared.fetchDisk()
             let items = savedDisk.map { disk -> Items in
-                //                print("----------\(savedDisk)")
+//                print("----------\(savedDisk)")
                 return Items(name: disk.name,
                              preview: disk.preview,
                              created: disk.created,
@@ -96,7 +96,6 @@ final class PublishedFileViewController: UIViewController {
         }
         monitor.start(queue: queue)
     }
-    
     
     private func fetchDataFromNetwork() {
         DispatchQueue.main.async {

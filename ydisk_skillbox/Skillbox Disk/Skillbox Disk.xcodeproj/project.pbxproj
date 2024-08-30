@@ -42,6 +42,8 @@
 		C29DF4DB2C526D5B00AE5248 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */; };
 		C2C205612C412D5900CA146E /* NoFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C205602C412D5900CA146E /* NoFilesViewController.swift */; };
 		C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */; };
+		C2F35CF52C81DFF400D29997 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F35CF42C81DFF400D29997 /* ProfileViewModel.swift */; };
+		C2F35CF92C8205AB00D29997 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F35CF82C8205AB00D29997 /* FilesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		C2C205602C412D5900CA146E /* NoFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilesViewController.swift; sourceTree = "<group>"; };
 		C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
+		C2F35CF42C81DFF400D29997 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		C2F35CF82C8205AB00D29997 /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
 		D29F610381913CD97F9965BA /* Pods-Skillbox Disk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.release.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.release.xcconfig"; sourceTree = "<group>"; };
 		F4EB68FF02128F6645726A5C /* Pods-Skillbox Disk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +141,7 @@
 			children = (
 				C260436D2C1C5BF900920752 /* OpenFile */,
 				C22DFCDF2C09E4910047EC40 /* FilesViewController.swift */,
+				C2F35CF82C8205AB00D29997 /* FilesViewModel.swift */,
 				C268B07D2C0B348E00717125 /* FilesCell.swift */,
 			);
 			path = FilesController;
@@ -156,6 +161,7 @@
 			children = (
 				C2447CA22C2EB8F8008FA90D /* PublishedFileViewController */,
 				C260436B2C11DBB300920752 /* ProfileViewController.swift */,
+				C2F35CF42C81DFF400D29997 /* ProfileViewModel.swift */,
 			);
 			path = ProfileViewController;
 			sourceTree = "<group>";
@@ -443,11 +449,13 @@
 				C22140A82C7631DB002F0A7D /* NotificationUtils.swift in Sources */,
 				C260436C2C11DBB300920752 /* ProfileViewController.swift in Sources */,
 				C268B07E2C0B348E00717125 /* FilesCell.swift in Sources */,
+				C2F35CF52C81DFF400D29997 /* ProfileViewModel.swift in Sources */,
 				C27EDD5C2BF65D6C00E31686 /* Constants.swift in Sources */,
 				C21BCEEE2C65FA92006B8647 /* CoreDataManager.swift in Sources */,
 				C27EDD532BF62F1A00E31686 /* InfoViewController.swift in Sources */,
 				C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */,
 				C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */,
+				C2F35CF92C8205AB00D29997 /* FilesViewModel.swift in Sources */,
 				C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */,
 				C27379032C7E3374005D4B84 /* RenameFileViewModel.swift in Sources */,
 				C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */,

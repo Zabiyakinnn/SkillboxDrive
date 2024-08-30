@@ -9,7 +9,7 @@ import UIKit
 
 class RenameFileViewController: UIViewController {
     
-    private var viewModel: RenameFileViewModel
+    private var renameFileViewModel: RenameFileViewModel
     
     private let activityIndicatorRenameFile: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
@@ -33,7 +33,7 @@ class RenameFileViewController: UIViewController {
     }()
     
     init(viewModel: RenameFileViewModel) {
-        self.viewModel = viewModel
+        self.renameFileViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,8 +45,8 @@ class RenameFileViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        textField.text = viewModel.fileName
-        if let image = viewModel.fileImage {
+        textField.text = renameFileViewModel.fileName
+        if let image = renameFileViewModel.fileImage {
             setLeftImage(image: image)
         }
         setRightButton()
@@ -115,11 +115,11 @@ class RenameFileViewController: UIViewController {
             return
         }
         
-        viewModel.fileName = newFileName
+        renameFileViewModel.fileName = newFileName
         DispatchQueue.main.async {
             self.activityIndicatorRenameFile.startAnimating()
         }
-        viewModel.renameFile { [weak self] result in
+        renameFileViewModel.renameFile { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let newFileName):

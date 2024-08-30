@@ -12,6 +12,7 @@ import Network
 final class FilesViewController: UIViewController {
     
     private var filesData: ItemList?
+    private var filesViewModel = FilesViewModel()
     let filesCell = "filesCell"
     
     private var activityIndicator: UIActivityIndicatorView = {
@@ -37,46 +38,46 @@ final class FilesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Все файлы"
+        filesViewModel.updateData()
         self.navigationController?.navigationBar.tintColor = .lightGray
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableView.dataSource = self
         tableView.delegate = self
         setupeView()
+        setupBindings()
+        setupContraint()
     }
     
     private func setupeView() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        setupContraint()
-        updateData()
         tableView.refreshControl = myRefreshControl
     }
     
-    private func updateData() {
+    private func setupBindings() {
+//        обновление состояния загрузки
+        filesViewModel.onLoadingStatus = { [weak self] in
+            guard let self = self else { return }
+            if self.filesViewModel.isLoading {
+                activityIndicator.startAnimating()
+            } else {
+                activityIndicator.stopAnimating()
+            }
+        }
+//        Обновление данных таблицы
         activityIndicator.startAnimating()
-        let queryItems = [
-            URLQueryItem(name: "path", value: "/"),
-            URLQueryItem(name: "limit", value: "300")
-        ]
-        NetworkService.shared.fetchData(endpoint: "https://cloud-api.yandex.net/v1/disk/resources",
-                                        queryItems: queryItems) { [weak self] result in
+        filesViewModel.onFilesData = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
             }
-            switch result {
-            case .success(let data):
-                do {
-                    let newFiles = try JSONDecoder().decode(ItemList.self, from: data)
-                    self?.filesData = newFiles
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
-                    }
-                } catch {
-                    print("Error decoding \(error)")
-                }
-            case .failure(let error):
-                print("Error \(error)")
-            }
+        }
+//        обработка ошибок
+        filesViewModel.onError = { [weak self] error in
+            guard let self = self else { return }
+            print("\(error)")
+            self.showAlert(title: "Ошибка", message: "\(error)")
         }
     }
     
@@ -90,7 +91,7 @@ final class FilesViewController: UIViewController {
     }
     
     @objc private func refresh(sender: UIRefreshControl) {
-        updateData()
+        filesViewModel.updateData()
         activityIndicator.stopAnimating()
         sender.endRefreshing()
     }
@@ -115,23 +116,27 @@ extension FilesViewController {
 extension FilesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filesData?._embedded?.items.count ?? 0
+        return filesViewModel.numberOfRows(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: filesCell, for: indexPath) as? FilesCell
-        guard let items = filesData?._embedded?.items, items.count > indexPath.row else {
-            return cell ?? UITableViewCell()
+//    Извлекаем ячейку с помощью идентификатора
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: filesCell, for: indexPath) as? FilesCell else {
+            return UITableViewCell()
+        }
+//        проверяем наличие данных
+        guard let items = filesViewModel.filesData?._embedded?.items, items.count > indexPath.row else {
+            return UITableViewCell()
         }
         let currentFile = items[indexPath.row]
-        cell?.configure(currentFile)
-        return cell ?? UITableViewCell()
+        cell.configure(currentFile)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let items = filesData?._embedded?.items, items.count > indexPath.row else {
+        guard let items = filesViewModel.filesData?._embedded?.items, items.count > indexPath.row else {
             return
         }
         let viewModel = items[indexPath.row]
@@ -157,7 +162,7 @@ extension FilesViewController: UITableViewDataSource, UITableViewDelegate {
                             let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                             let openImageVC = ImageViewController(viewModel: imageViewModel)
                             imageViewModel.fileRenamed = { [weak self] in
-                                self?.updateData()
+                                self?.filesViewModel.updateData()
                                 self?.tableView.reloadData()
                             }
                             self?.navigationController?.pushViewController(openImageVC, animated: true)
@@ -186,7 +191,6 @@ extension FilesViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }

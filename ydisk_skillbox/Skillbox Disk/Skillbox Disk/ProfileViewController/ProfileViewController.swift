@@ -9,10 +9,10 @@ import UIKit
 import Charts
 import Network
 
-class ProfileViewController: UIViewController, ChartViewDelegate {
+final class ProfileViewController: UIViewController, ChartViewDelegate {
     
     var pieChart = PieChartView()
-    private var profileInfo: ProfileInfo?
+    private var profileViewModel = ProfileViewModel()
     
     private lazy var buttonFile: UIButton = {
         let button = UIButton(type: .roundedRect)
@@ -46,14 +46,27 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
         pieChart.delegate = self
         pieChart.noDataText = "Загрузка данных..."
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.tintColor = .lightGray
         view.addSubview(pieChart)
         setupConstraint()
+        bindViewModel()
+        profileViewModel.checkNetworkConnection()
     }
     
     private func setupeView() {
         configureItems()
         view.addSubview(buttonFile)
-        updateData()
+    }
+    
+    private func bindViewModel() {
+        profileViewModel.onProfileInfoUpdated = { [weak self] profileInfo in
+            guard let self = self else { return }
+            self.updatePieChart(totalSpace: profileInfo.total_space ?? 0, usedSpace: profileInfo.used_space ?? 0)
+        }
+        profileViewModel.onError = { [weak self] error in
+            guard let self = self else { return }
+            self.showAlert(title: "Ошибка", message: error)
+        }
     }
     
     func updatePieChart(totalSpace: Int, usedSpace: Int) {
@@ -114,59 +127,6 @@ class ProfileViewController: UIViewController, ChartViewDelegate {
     @objc func enterButton() {
         let publishedVC = PublishedFileViewController()
         navigationController?.pushViewController(publishedVC, animated: true)
-    }
-    
-    private func loadProfileInfo() {
-        DispatchQueue.main.async {
-            let infoProfile = CoreDataManager.shared.fetchDiskProfileInfo()
-            let item = infoProfile.map { disk in
-                return ProfileInfo(
-                    total_space: Int(disk.total_space),
-                    used_space: Int(disk.used_space)
-                )
-            }
-            if let firstItem = item.first {
-                self.updatePieChart(totalSpace: firstItem.total_space ?? 0, usedSpace: firstItem.used_space ?? 0)
-            } else {
-                print("Данные не найдены")
-            }
-        }
-    }
-    
-    private func updateData() {
-        let monitor = NWPathMonitor() //Монитор отслеживания состояния сети
-        let queue = DispatchQueue(label: "NetworkMonitor")
-        
-        monitor.pathUpdateHandler = { [weak self] path in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                if path.status == .satisfied {
-//                    если есть подключение к интернету
-                    self.fetchProfileInfo()
-                    print("Загрузка из сети")
-                } else {
-//                    нет подключения к интернету
-                    self.loadProfileInfo()
-//                    self?.tableView.reloadData()
-                    print("Загрузка из core data")
-                    self.showAlert(title: "Нет соеденения с интернетом", message: "Повторите попытку позже")
-                }
-                monitor.cancel()
-            }
-        }
-        monitor.start(queue: queue)
-    }
-    
-    private func fetchProfileInfo() {
-        let networkService = NetworkService.shared
-        networkService.onProfileInfoReceived = { [weak self] freeSpace, usedSpace in
-            let saveProfileInfo = ProfileInfo(total_space: freeSpace, used_space: usedSpace)
-            DispatchQueue.main.async {
-                CoreDataManager.shared.saveProfileInfo(profileInfo: saveProfileInfo)
-                self?.updatePieChart(totalSpace: freeSpace, usedSpace: usedSpace)
-            }
-        }
-        networkService.profileInfoData()
     }
     
     private func showAlert(title: String, message: String) {

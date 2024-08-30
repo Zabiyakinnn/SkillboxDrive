@@ -11,7 +11,7 @@ import SDWebImage
 
 final class ImageViewController: UIViewController {
     
-    private let viewModel: ImageViewModel
+    private let imageViewModel: ImageViewModel
     private let contentView = UIView()
     
     private var activityIndicator: UIActivityIndicatorView = {
@@ -103,7 +103,7 @@ final class ImageViewController: UIViewController {
     }()
     
     init(viewModel: ImageViewModel) {
-        self.viewModel = viewModel
+        self.imageViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -161,16 +161,16 @@ final class ImageViewController: UIViewController {
 
     private func bindViewModel() {
         self.activityIndicator.startAnimating()
-        viewModel.onImageLoaded = { [weak self] in
+        imageViewModel.onImageLoaded = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
-                self.urlImage.image = self.viewModel.image
+                self.urlImage.image = self.imageViewModel.image
                 print("Изображение загруженно")
             }
         }
         
-        viewModel.onImageLoadingError = { [weak self] error in
+        imageViewModel.onImageLoadingError = { [weak self] error in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
@@ -179,8 +179,8 @@ final class ImageViewController: UIViewController {
             }
         }
         
-        dataLabel.text = viewModel.formattedDate
-        nameFileLabel.text = viewModel.imageName
+        dataLabel.text = imageViewModel.formattedDate
+        nameFileLabel.text = imageViewModel.imageName
     }
     
     @objc func shareButtonTapped() {
@@ -207,7 +207,7 @@ final class ImageViewController: UIViewController {
             guard let self = self else { return }
             
             self.activityIndicatorDelete.startAnimating()
-            self.viewModel.deleteFile { result in
+            self.imageViewModel.deleteFile { result in
                 DispatchQueue.main.async {
                     self.activityIndicatorDelete.stopAnimating()
                     switch result {
@@ -235,14 +235,13 @@ final class ImageViewController: UIViewController {
     }
     
     @objc private func moreButtonTapped() {
-        let renameViewModel = RenameFileViewModel(file: viewModel.item, fileName: viewModel.imageName ?? "", fileImage: viewModel.image)
+        let renameViewModel = RenameFileViewModel(file: imageViewModel.item, fileName: imageViewModel.imageName ?? "", fileImage: imageViewModel.image)
         let renameVC = RenameFileViewController(viewModel: renameViewModel)
-//        let renameVC = RenameFileViewController(file: viewModel.item, fileName: viewModel.imageName ?? "", fileImage: viewModel.image)
         renameViewModel.fileRenamed = { [ weak self ] newFileName in
             guard let self = self else { return }
             self.nameFileLabel.text = newFileName
-            self.viewModel.imageName = newFileName
-            viewModel.fileRenamed?()
+            self.imageViewModel.imageName = newFileName
+            imageViewModel.fileRenamed?()
         }
         self.navigationController?.pushViewController(renameVC, animated: true)
     }
