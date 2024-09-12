@@ -22,10 +22,6 @@ class FilesViewModel {
         }
     }
     
-    func numberOfSection() -> Int {
-        1
-    }
-    
     func numberOfRows(_ section: Int) -> Int {
         filesData?._embedded?.items.count ?? 0
     }
@@ -35,7 +31,7 @@ class FilesViewModel {
     var onLoadingStatus: (() -> Void)?
     var onError: ((Error) -> Void)?
     
-//    MARK: Methods
+//    MARK: - Methods
     
     func updateData() {
         self.isLoading = true

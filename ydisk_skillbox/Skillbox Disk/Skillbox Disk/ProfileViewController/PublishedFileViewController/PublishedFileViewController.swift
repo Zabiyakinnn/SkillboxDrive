@@ -12,7 +12,7 @@ import CoreData
 
 final class PublishedFileViewController: UIViewController {
     
-    private var publishedFileData: DiskResponce?
+    private var publishedFileViewModel = PublishedFileViewModel()
     var publishedFileCell = "publishedFileCell"
     
     private var activityIndicator: UIActivityIndicatorView = {
@@ -38,6 +38,8 @@ final class PublishedFileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        publishedFileViewModel.checkNetworkConnection()
+        setupBindings()
         self.navigationController?.navigationBar.tintColor = .lightGray
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         title = "Опубликованные файлы"
@@ -50,91 +52,41 @@ final class PublishedFileViewController: UIViewController {
     private func setupeView() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        updateData()
         tableView.refreshControl = myRefreshControl
     }
     
-    private func loadPublishedFile() {
-        DispatchQueue.main.async {
-            let savedDisk = CoreDataManager.shared.fetchDisk()
-            let items = savedDisk.map { disk -> Items in
-//                print("----------\(savedDisk)")
-                return Items(name: disk.name,
-                             preview: disk.preview,
-                             created: disk.created,
-                             size: disk.size,
-                             path: disk.path,
-                             mime_type: disk.mime_type,
-                             resource_id: disk.resource_id)
+    private func setupBindings() {
+        publishedFileViewModel.onLoadingStatus = { [weak self] in
+            guard let self = self else { return }
+            if self.publishedFileViewModel.isLoading {
+                self.activityIndicator.startAnimating()
+            } else {
+                activityIndicator.stopAnimating()
             }
-            self.publishedFileData = DiskResponce(items: items)
-            self.tableView.reloadData()
-            self.activityIndicator.stopAnimating()
         }
-    }
-    
-    private func updateData() {
-        let monitor = NWPathMonitor() //Монитор отслеживания состояния сети
-        let queue = DispatchQueue(label: "NetworkMonitor")
         
-        monitor.pathUpdateHandler = { [weak self] path in
+        activityIndicator.startAnimating()
+        publishedFileViewModel.onPublischedFile = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                if path.status == .satisfied {
-//                    если есть подключение к интернету
-                    self.fetchDataFromNetwork()
-                    print("Загрузка из сети")
-                } else {
-//                    нет подключения к интернету
-                    self.loadPublishedFile()
-//                    self?.tableView.reloadData()
-                    print("Загрузка из core data")
-                    self.showNoInternetConnectionView()
-                }
-                monitor.cancel()
-            }
-        }
-        monitor.start(queue: queue)
-    }
-    
-    private func fetchDataFromNetwork() {
-        DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
-        }
-        let queryItems = [
-            URLQueryItem(name: "type", value: "dir, file"),
-            URLQueryItem(name: "limit", value: "300")
-        ]
-        NetworkService.shared.fetchData(endpoint: "https://cloud-api.yandex.net/v1/disk/resources/files",
-                                        queryItems: queryItems) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    do {
-                        let newFiles = try JSONDecoder().decode(DiskResponce.self, from: data)
-                        self.publishedFileData = newFiles
-                        DispatchQueue.main.async {
-                            CoreDataManager.shared.saveDisks(from: newFiles)
-//                            self.loadPublishedFile()
-                            self.tableView.reloadData()
-                        }
-                    } catch {
-                        print("Ошибка декодирования \(error)")
-                    }
-                case .failure(let error):
-                    print("Error \(error)")
-                    self.showAlert(title: "Ошибка сервера", message: "Повторите попытку позже")
-                }
+                self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
             }
+        }
+        
+        publishedFileViewModel.onError = { [weak self] error in
+            guard let self = self else { return }
+            print("Error publichedFile\(error)")
+            showNoInternetConnectionView()
         }
     }
     
     @objc private func refresh(sender: UIRefreshControl) {
-        activityIndicator.stopAnimating()
-        updateData()
-        sender.endRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.activityIndicator.stopAnimating()
+            self.myRefreshControl.isHidden = true
+            sender.endRefreshing()
+        }
     }
     
     private func showAlert(title: String, message: String) {
@@ -152,26 +104,6 @@ final class PublishedFileViewController: UIViewController {
     
     private func showDeleteFile() {
         NotificationUtils.showDeliteFile(on: self)
-    }
-    
-    private func deleteFile(at indexPath: IndexPath) {
-        guard let item = publishedFileData?.items?[indexPath.row] else { return }
-        let filePath = item.path
-        
-        NetworkService.shared.deleteFile(url: "https://cloud-api.yandex.net/v1/disk/resources", filePath: filePath ?? "") { result in
-            switch result {
-            case .success():
-                DispatchQueue.main.async {
-//              Удалить элемент и обновить таблицу
-                    CoreDataManager.shared.deleteFile(byPath: filePath ?? "")
-                    self.publishedFileData?.items?.remove(at: indexPath.row)
-                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                    self.showDeleteFile()
-                }
-            case .failure(let error):
-                print("Не удалось удалить файл: \(error.localizedDescription)")
-            }
-        }
     }
 }
 
@@ -193,27 +125,37 @@ extension PublishedFileViewController {
 extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return publishedFileData?.items?.count ?? 0
+        publishedFileViewModel.numberOfRows(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: publishedFileCell, for: indexPath) as? PublishedFileCell
-        guard let items = publishedFileData?.items, items.count > indexPath.row else {
-            return cell ?? UITableViewCell()
+//        извлекаем ячейку с помощью идентификатора
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: publishedFileCell, for: indexPath) as? PublishedFileCell else {
+            return UITableViewCell()
         }
-        cell?.onDeleteTapped = { [weak self] in
-            self?.deleteFile(at: indexPath)
+//        проверяем наличие данных
+        guard let items = publishedFileViewModel.filesData?.items, items.count > indexPath.row else {
+            return UITableViewCell()
         }
-        cell?.viewController = self
+        cell.onDeleteTapped = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.publishedFileViewModel.deleteFile(at: indexPath)
+//                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
+                self.showDeleteFile()
+            }
+        }
+        cell.viewController = self
         let currentFile = items[indexPath.row]
-        cell?.configure(currentFile)
-        return cell ?? UITableViewCell()
+        cell.configure(currentFile)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let items = publishedFileData?.items, items.count > indexPath.row else {
+        guard let items = publishedFileViewModel.filesData?.items, items.count > indexPath.row else {
             return
         }
         let viewModel = items[indexPath.row]
@@ -232,7 +174,7 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
                         let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                         let openImageVC = ImageViewController(viewModel: imageViewModel)
                         imageViewModel.fileRenamed = { [ weak self ] in
-                            self?.updateData()
+                            self?.publishedFileViewModel.checkNetworkConnection()
                             self?.tableView.reloadData()
                         }
                         self?.navigationController?.pushViewController(openImageVC, animated: true)

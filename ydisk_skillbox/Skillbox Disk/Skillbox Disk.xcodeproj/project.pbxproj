@@ -41,9 +41,12 @@
 		C29DF4D92C52501E00AE5248 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */; };
 		C29DF4DB2C526D5B00AE5248 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */; };
 		C2C205612C412D5900CA146E /* NoFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C205602C412D5900CA146E /* NoFilesViewController.swift */; };
+		C2C34E212C8C43CC002DA5CD /* PublishedFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C34E202C8C43CC002DA5CD /* PublishedFileViewModel.swift */; };
+		C2C34E252C932A09002DA5CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2C34E272C932A09002DA5CD /* Localizable.strings */; };
 		C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */; };
 		C2F35CF52C81DFF400D29997 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F35CF42C81DFF400D29997 /* ProfileViewModel.swift */; };
 		C2F35CF92C8205AB00D29997 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F35CF82C8205AB00D29997 /* FilesViewModel.swift */; };
+		C2F35CFB2C8304A300D29997 /* LastUploadedFilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F35CFA2C8304A300D29997 /* LastUploadedFilesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,9 +86,14 @@
 		C29DF4D82C52501E00AE5248 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		C29DF4DA2C526D5B00AE5248 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		C2C205602C412D5900CA146E /* NoFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilesViewController.swift; sourceTree = "<group>"; };
+		C2C34E202C8C43CC002DA5CD /* PublishedFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishedFileViewModel.swift; sourceTree = "<group>"; };
+		C2C34E222C9329B5002DA5CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C2C34E262C932A09002DA5CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2C34E282C932A0B002DA5CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2C5A44A2C4904A6005CDF52 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
 		C2F35CF42C81DFF400D29997 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		C2F35CF82C8205AB00D29997 /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
+		C2F35CFA2C8304A300D29997 /* LastUploadedFilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastUploadedFilesViewModel.swift; sourceTree = "<group>"; };
 		D29F610381913CD97F9965BA /* Pods-Skillbox Disk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.release.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.release.xcconfig"; sourceTree = "<group>"; };
 		F4EB68FF02128F6645726A5C /* Pods-Skillbox Disk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skillbox Disk.debug.xcconfig"; path = "Target Support Files/Pods-Skillbox Disk/Pods-Skillbox Disk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				C2447CA32C2EB934008FA90D /* PublishedFileViewController.swift */,
+				C2C34E202C8C43CC002DA5CD /* PublishedFileViewModel.swift */,
 				C29D5E172C37DC55007B6855 /* PublishedFileCell.swift */,
 			);
 			path = PublishedFileViewController;
@@ -213,6 +222,7 @@
 				C27EDD5A2BF65D5D00E31686 /* Common */,
 				C27EDD4E2BF62B6600E31686 /* StartViewController */,
 				C27EDD512BF62EF500E31686 /* InfoViewController */,
+				C2C34E272C932A09002DA5CD /* Localizable.strings */,
 				C27EDD3A2BF6254200E31686 /* AppDelegate.swift */,
 				C27EDD3C2BF6254200E31686 /* SceneDelegate.swift */,
 				C27EDD432BF6254500E31686 /* Assets.xcassets */,
@@ -261,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				C289782C2C1081C00070E178 /* LastUploadedFilesViewController.swift */,
+				C2F35CFA2C8304A300D29997 /* LastUploadedFilesViewModel.swift */,
 				C28978302C1088A10070E178 /* UploadedFilesCell.swift */,
 			);
 			path = UploadedFilesController;
@@ -361,6 +372,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = C27EDD2E2BF6254200E31686;
 			productRefGroup = C27EDD382BF6254200E31686 /* Products */;
@@ -378,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C27EDD472BF6254500E31686 /* LaunchScreen.storyboard in Resources */,
+				C2C34E252C932A09002DA5CD /* Localizable.strings in Resources */,
 				C27EDD442BF6254500E31686 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,9 +467,11 @@
 				C21BCEEE2C65FA92006B8647 /* CoreDataManager.swift in Sources */,
 				C27EDD532BF62F1A00E31686 /* InfoViewController.swift in Sources */,
 				C2447CA42C2EB934008FA90D /* PublishedFileViewController.swift in Sources */,
+				C2C34E212C8C43CC002DA5CD /* PublishedFileViewModel.swift in Sources */,
 				C22DFCE22C09F5DF0047EC40 /* ItemList.swift in Sources */,
 				C2F35CF92C8205AB00D29997 /* FilesViewModel.swift in Sources */,
 				C21BCEE72C64E943006B8647 /* CoreData.xcdatamodeld in Sources */,
+				C2F35CFB2C8304A300D29997 /* LastUploadedFilesViewModel.swift in Sources */,
 				C27379032C7E3374005D4B84 /* RenameFileViewModel.swift in Sources */,
 				C27EDD592BF6440300E31686 /* OnboardingView.swift in Sources */,
 				C2C5A44B2C4904A6005CDF52 /* WKWebViewController.swift in Sources */,
@@ -475,8 +490,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				C27EDD462BF6254500E31686 /* Base */,
+				C2C34E222C9329B5002DA5CD /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C2C34E272C932A09002DA5CD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2C34E262C932A09002DA5CD /* en */,
+				C2C34E282C932A0B002DA5CD /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -487,6 +512,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -550,6 +576,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

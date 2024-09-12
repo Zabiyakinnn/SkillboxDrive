@@ -92,8 +92,11 @@ final class FilesViewController: UIViewController {
     
     @objc private func refresh(sender: UIRefreshControl) {
         filesViewModel.updateData()
-        activityIndicator.stopAnimating()
-        sender.endRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.activityIndicator.stopAnimating()
+            self.myRefreshControl.isHidden = true
+            sender.endRefreshing()
+        }
     }
 }
 
