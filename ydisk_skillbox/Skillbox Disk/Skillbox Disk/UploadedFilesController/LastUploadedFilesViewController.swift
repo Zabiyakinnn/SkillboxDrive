@@ -146,7 +146,7 @@ extension LastUploadedFilesViewController: UITableViewDataSource, UITableViewDel
                     case "image/png", "image/svg", "image/jpeg", "image/heic":
                         let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                         let openImageVC = ImageViewController(viewModel: imageViewModel)
-                        imageViewModel.fileRenamed = { [weak self] in
+                        imageViewModel.fileDelete = { [weak self] in
                             self?.lastUploadedFileViewModel.checkNetworkConnection()
                             self?.tableView.reloadData()
                         }

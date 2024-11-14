@@ -141,7 +141,6 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.publishedFileViewModel.deleteFile(at: indexPath)
-//                tableView.deleteRows(at: [indexPath], with: .automatic)
                 tableView.reloadData()
                 self.showDeleteFile()
             }
@@ -173,7 +172,7 @@ extension PublishedFileViewController: UITableViewDelegate, UITableViewDataSourc
                     case "image/png", "image/svg", "image/jpeg", "image/heic":
                         let imageViewModel = ImageViewModel(item: itemList, imageURL: url)
                         let openImageVC = ImageViewController(viewModel: imageViewModel)
-                        imageViewModel.fileRenamed = { [ weak self ] in
+                        imageViewModel.fileDelete = { [ weak self ] in
                             self?.publishedFileViewModel.checkNetworkConnection()
                             self?.tableView.reloadData()
                         }

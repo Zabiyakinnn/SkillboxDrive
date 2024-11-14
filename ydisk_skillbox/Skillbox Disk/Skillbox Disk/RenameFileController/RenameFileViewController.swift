@@ -57,6 +57,7 @@ class RenameFileViewController: UIViewController {
         title = "Переименовать"
         view.addSubview(textField)
         view.addSubview(activityIndicatorRenameFile)
+        self.dismissKeyboard()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Готово",
             style: .plain,
@@ -157,5 +158,15 @@ extension RenameFileViewController {
             make.right.equalToSuperview().offset(-82)
             make.top.equalToSuperview().offset(60)
         }
+    }
+    
+    private func dismissKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    //    обработка нажатия и скрытия клавиатуры
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        textField.endEditing(true)
     }
 }

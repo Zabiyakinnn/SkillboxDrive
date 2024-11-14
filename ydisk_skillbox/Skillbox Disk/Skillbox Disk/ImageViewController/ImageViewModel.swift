@@ -17,8 +17,8 @@ class ImageViewModel {
     var imageName: String?
     var formattedDate: String?
     
-//  Предача информации об удалении изображения в предъидущей контроллер
-    var fileRenamed: (() -> Void)?
+//  Предача информации об удалении изображения
+    var fileDelete: (() -> Void)?
 //  Успешная загрузка изображения
     var onImageLoaded: (() -> Void)?
 //  Ошибка загрузки изображения
@@ -38,35 +38,22 @@ class ImageViewModel {
     }
 //    Загрузка изображения
     private func loadImage() {
-        // Создание ключ-кеша используя имя элемента или URL
-        let cacheKey = item.name ?? imageURL.absoluteString
-        // Проверяем кешированно ли уже изображение
-        if let cachedImage = SDImageCache.shared.imageFromCache(forKey: cacheKey) {
-            // Если изображение кешированно загружаем его
-            self.image = cachedImage
-            DispatchQueue.main.async {
-                self.onImageLoaded?()
-                print("Image loaded from cache")
-            }
-        } else {
-            // Загружаем изображение с помощью SDWebImageDownloader
-            SDWebImageDownloader.shared.downloadImage(with: imageURL, options: [.highPriority], progress: nil) { [weak self] (image, data, error, finished) in
-                guard let self = self else { return }
-                
-                // Проверка на ошибки загрузки изображения
-                if let error = error {
-                    print("Error loading image: \(error.localizedDescription)")
-                    DispatchQueue.main.async {
-                        self.onImageLoadingError?(error.localizedDescription)
-                    }
-                } else if let image = image, finished {
-                    // Если изображение успешно загруженно сохранить его в кеш
-                    self.image = image
-                    SDImageCache.shared.store(image, forKey: cacheKey, toDisk: true, completion: nil)
-                    DispatchQueue.main.async {
-                        self.onImageLoaded?()
-                        print("Image loaded from network")
-                    }
+        // Используем только загрузку изображения без кеширования
+        SDWebImageDownloader.shared.downloadImage(with: imageURL, options: [.highPriority], progress: nil) { [weak self] (image, data, error, finished) in
+            guard let self = self else { return }
+            
+            // Проверка на ошибки загрузки изображения
+            if let error = error {
+                print("Error loading image: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.onImageLoadingError?(error.localizedDescription)
+                }
+            } else if let image = image, finished {
+                // Если изображение успешно загружено, используем его без кеширования
+                self.image = image
+                DispatchQueue.main.async {
+                    self.onImageLoaded?()
+                    print("Image loaded from network (no cache)")
                 }
             }
         }

@@ -65,9 +65,11 @@ final class WKWebViewController: UIViewController {
     }
     
     private func loadDocument() {
-        activityIndicator.startAnimating()
-            webView.load(URLRequest(url: docURL))
-            webView.navigationDelegate = self
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+            self.webView.load(URLRequest(url: self.docURL))
+            self.webView.navigationDelegate = self
+        }
     }
     
     private func setupConstraint() {

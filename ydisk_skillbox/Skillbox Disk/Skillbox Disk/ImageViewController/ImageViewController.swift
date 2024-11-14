@@ -14,6 +14,7 @@ final class ImageViewController: UIViewController {
     private let imageViewModel: ImageViewModel
     private let contentView = UIView()
     
+//    MARK: - ContenView
     private var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.color = .white
@@ -111,6 +112,7 @@ final class ImageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -155,10 +157,14 @@ final class ImageViewController: UIViewController {
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(hendleSwipDown(_:)))
         swipeDownGesture.direction = .down
         urlImage.addGestureRecognizer(swipeDownGesture)
+//        жест нажатия на изображение
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
+        urlImage.addGestureRecognizer(tapGesture)
         
         setupConstraint()
     }
 
+//    MARK: - Methods
     private func bindViewModel() {
         self.activityIndicator.startAnimating()
         imageViewModel.onImageLoaded = { [weak self] in
@@ -241,7 +247,7 @@ final class ImageViewController: UIViewController {
             guard let self = self else { return }
             self.nameFileLabel.text = newFileName
             self.imageViewModel.imageName = newFileName
-            imageViewModel.fileRenamed?()
+            imageViewModel.fileDelete?()
         }
         self.navigationController?.pushViewController(renameVC, animated: true)
     }
@@ -258,17 +264,31 @@ final class ImageViewController: UIViewController {
     
     @objc private func hendleSwipDown(_ sender: UISwipeGestureRecognizer) {
         guard sender.state == .ended else { return }
+        //      Начало анимации
+        UIView.animate(withDuration: 0.7, delay: 0, options: .curveEaseInOut, animations: {
+            //      Уменьшение размера картинки
+            self.urlImage.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            //      Перемещение картинки вниз
+            self.urlImage.center = CGPoint(x: self.urlImage.center.x, y: self.view.bounds.height + self.urlImage.bounds.height)
+            self.view.alpha = 0.0
+        }) { _ in
+            //      Закртие кантролера
+            self.navigationController?.popViewController(animated: false)
+        }
+    }
+    
+//    обработчик нажатия на изображение
+    @objc private func handleImageTap() {
+        let isHidden = self.infoView.alpha == 0 && self.customBarView.alpha == 0
         
-//      Начало анимации
-        UIView.animate(withDuration: 0.9, delay: 0, options: .curveEaseInOut, animations: {
-//      Уменьшение размера картинки
-        self.urlImage.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-//      Перемещение картинки вниз
-        self.urlImage.center = CGPoint(x: self.urlImage.center.x, y: self.view.bounds.height + self.urlImage.bounds.height)
-        self.view.alpha = 0
-    }) { _ in
-//      Закртие кантролера
-        self.navigationController?.popViewController(animated: false)
+        UIView.animate(withDuration: 0.3) {
+            if isHidden {
+                self.infoView.alpha = 1
+                self.customBarView.alpha = 1
+            } else {
+                self.infoView.alpha = 0
+                self.customBarView.alpha = 0
+            }
         }
     }
 }
